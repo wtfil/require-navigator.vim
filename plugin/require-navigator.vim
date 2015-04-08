@@ -38,12 +38,24 @@ function! FindFile()
 	return ResolvePackage(relativepath)
 endfunction
 
+let g:filehistory = []
+
 function! Navigate()
 	let filename = FindFile()
 	echo filename
 	if len(filename)
+		let g:filehistory = g:filehistory + [expand('%:p')]
 		exe 'edit ' filename
 	endif
 endfunction
 
+function! Back()
+	if len(g:filehistory)
+		let last = g:filehistory[-1]
+		let g:filehistory = g:filehistory[0:-2]
+		exe 'edit ' last
+	endif
+endfunction
+
 map <c-r> :call Navigate()<cr>
+map <c-u> :call Back()<cr>
