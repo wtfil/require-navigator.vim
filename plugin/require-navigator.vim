@@ -26,9 +26,10 @@ endfunction
 
 function! FindFile()
 	let cn = col('.')
-	normal yi'
+	normal yi(
 	exe 'normal' cn.'|'
 	let relativePath = @
+	let relativePath = relativePath[1:-2]
 	if relativePath =~ '^\.'
 		let dir = expand('%:p:h')
 		return dir.'/'.relativePath.'.js'
