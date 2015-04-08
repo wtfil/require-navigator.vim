@@ -33,7 +33,13 @@ function! FindFile()
 	let relativepath = relativepath[1:-2]
 	if relativepath =~ '^\.'
 		let dir = expand('%:p:h')
-		return dir.'/'.relativepath.'.js'
+		let filename = dir.'/'.relativepath
+		echo filename
+		if filereadable(filename.'.js')
+			return filename.'.js'
+		else
+			return filename.'/index.js'
+		endif
 	endif
 	return ResolvePackage(relativepath)
 endfunction
