@@ -1,6 +1,6 @@
 function! ResolvePackage(name)
 	let dir = expand('%:p:h')
-	while len(dir) > 0
+	while len(dir) > 1
 		let nodedir = dir.'/node_modules/'.a:name
 		let package = nodedir.'/package.json'
 		if filereadable(package)
@@ -21,6 +21,7 @@ function! ResolvePackage(name)
 		endif
 		let dir = '/'.join(split(dir, '/')[0:-2], '/')
 	endwhile
+	echo 'require-navigator: Can not find module "'.a:name.'"'
 	return ''
 endfunction
 
@@ -28,13 +29,13 @@ function! FindFile()
 	let cn = col('.')
 	normal yi(
 	exe 'normal' cn.'|'
-	let relativePath = @
-	let relativePath = relativePath[1:-2]
-	if relativePath =~ '^\.'
+	let relativepath = @
+	let relativepath = relativepath[1:-2]
+	if relativepath =~ '^\.'
 		let dir = expand('%:p:h')
-		return dir.'/'.relativePath.'.js'
+		return dir.'/'.relativepath.'.js'
 	endif
-	return ResolvePackage(relativePath)
+	return ResolvePackage(relativepath)
 endfunction
 
 function! Navigate()
