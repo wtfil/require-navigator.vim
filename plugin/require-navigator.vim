@@ -34,7 +34,7 @@ function! ResolveForBrowser(name)
 	while len(dir) > 1
 		let package = dir.'/package.json'
 		if filereadable(package)
-			let js = 'var package = require(\"'.package.'\"); var aliases = package.browser || package.aliasify && package.aliasify.aliases; console.log(aliases && aliases[\"'.alias.'\"] || \"\")'
+			let js = 'var package = require(\"'.package.'\"); var aliases = package.browser || package.aliasify && package.aliasify.aliases; console.log(aliases && (aliases[\"'.alias.'\"] || aliases[\"'.alias.'.js\"])|| \"\")'
 			let main = RunNode(js)
 			if len(main)
 				if len(sp) > 1
@@ -45,8 +45,11 @@ function! ResolveForBrowser(name)
 			endif
 			if filereadable(main.'.js')
 				return main.'.js'
+			elseif filereadable(main.'/index.js')
+				return main.'/index.js'
+			else
+				return main
 			endif
-			return main.'/index.js'
 		endif
 		let dir = '/'.join(split(dir, '/')[0:-2], '/')
 	endwhile
