@@ -34,7 +34,7 @@ function! ResolveForBrowser(name)
 	while len(dir) > 1
 		let package = dir.'/package.json'
 		if filereadable(package)
-			let js = 'var package = require(\"'.package.'\"); var aliases = package.browser || package.aliasify.aliases; console.log(aliases[\"'.alias.'\"] || \"\")'
+			let js = 'var package = require(\"'.package.'\"); var aliases = package.browser || package.aliasify && package.aliasify.aliases; console.log(aliases && aliases[\"'.alias.'\"] || \"\")'
 			let main = RunNode(js)
 			if len(main)
 				if len(sp) > 1
