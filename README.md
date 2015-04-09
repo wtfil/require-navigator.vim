@@ -1,7 +1,7 @@
 ## `require` navigator for javascript code
 
 ### Description
-This is a vim plugin provides easy way not navigate over `require`s in javascript code
+This vim plugin provides easy way for navigation over `require`s in javascript code
 
 ### Installation
 
