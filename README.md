@@ -11,7 +11,7 @@ Then `vim +PluginInstall +qa`
 
 ### Usage
 
-`<c+r>` when cursor above to `require` statement to open module in current window
+`<c+e>` when cursor above to `require` statement to open module in current window
 
 `<c+u>` to go back on previous file
 
