@@ -85,7 +85,7 @@ function! Navigate()
 	let filename = FindFile()
 	echo filename
 	if len(filename)
-		let g:filehistory = g:filehistory + [expand('%:p')]
+		let g:filehistory = g:filehistory + [[expand('%:p'), line(".")]]
 		exe 'edit ' filename
 	endif
 endfunction
@@ -94,7 +94,7 @@ function! Back()
 	if len(g:filehistory)
 		let last = g:filehistory[-1]
 		let g:filehistory = g:filehistory[0:-2]
-		exe 'edit ' last
+		exe 'edit +'.last[1] last[0]
 	endif
 endfunction
 
