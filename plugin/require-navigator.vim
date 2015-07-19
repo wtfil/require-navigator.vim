@@ -58,10 +58,13 @@ endfunction
 
 function! FindFile()
 	let cn = col('.')
-	normal yi(
+	if getline('.') =~ "'"
+		normal "ryi'
+	else
+		normal "ryi"
+	endif
 	exe 'normal' cn.'|'
 	let relativepath = @
-	let relativepath = relativepath[1:-2]
 	if relativepath =~ '^\.'
 		let dir = expand('%:p:h')
 		let filename = dir.'/'.relativepath
